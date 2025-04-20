@@ -1,3 +1,5 @@
+-- bootstrap lazy.nvim, LazyVim and your plugins
+
 -- General settings
 vim.opt.number = true
 vim.opt.relativenumber = true
