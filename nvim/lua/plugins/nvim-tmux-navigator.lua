@@ -1,18 +1,10 @@
 return {
-  -- Tmux Navigation Plugin
-  {
-    "christoomey/vim-tmux-navigator",
-    config = function()
-      vim.keymap.set("n", "<C-h>", ":TmuxNavigateLeft<CR>")
-      vim.keymap.set("n", "<C-j>", ":TmuxNavigateDown<CR>")
-      vim.keymap.set("n", "<C-k>", ":TmuxNavigateUp<CR>")
-      vim.keymap.set("n", "<C-l>", ":TmuxNavigateRight<CR>")
-    end,
-  },
-
-  -- Sensible Defaults for TMUX
-  {
-    "tmux-plugins/tmux-sensible",
-    lazy = false,
-  },
+  "christoomey/vim-tmux-navigator",
+  lazy = false, -- Ensure it's loaded at startup
+  config = function()
+    vim.keymap.set("n", "<C-h>", "<cmd>TmuxNavigateLeft<cr>", { silent = true })
+    vim.keymap.set("n", "<C-j>", "<cmd>TmuxNavigateDown<cr>", { silent = true })
+    vim.keymap.set("n", "<C-k>", "<cmd>TmuxNavigateUp<cr>", { silent = true })
+    vim.keymap.set("n", "<C-l>", "<cmd>TmuxNavigateRight<cr>", { silent = true })
+  end,
 }

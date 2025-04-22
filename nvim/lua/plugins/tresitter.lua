@@ -16,4 +16,7 @@ return {
       vim.treesitter.language.register("markdown", "mdx")
     end,
   },
+  {
+    "stevearc/conform.nvim",
+  },
 }
