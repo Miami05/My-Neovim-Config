@@ -1,13 +1,45 @@
 return {
   {
     "nvim-treesitter/nvim-treesitter",
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter-textobjects",
+    },
     opts = {
-      ensure_installed = { "c", "cpp", "python", "sql", "cmake", "make", "ninja", "markdown", "bash" },
+      ensure_installed = {
+        "c",
+        "cpp",
+        "python",
+        "sql",
+        "cmake",
+        "make",
+        "ninja",
+        "markdown",
+        "bash",
+      },
+      highlight = {
+        enable = true,
+      },
+      indent = {
+        enable = true,
+      },
+      textobjects = {
+        swap = {
+          enable = true,
+          swap_next = {
+            ["<leader>na"] = "@parameter.inner", -- swap parameters/argument with next
+            ["<leader>nm"] = "@function.outer", -- swap function with next
+          },
+          swap_previous = {
+            ["<leader>pa"] = "@parameter.inner", -- swap parameters/argument with prev
+            ["<leader>pm"] = "@function.outer", -- swap function with previous
+          },
+        },
+      },
     },
     config = function(_, opts)
       require("nvim-treesitter.configs").setup(opts)
 
-      -- MDX
+      -- MDX support
       vim.filetype.add({
         extension = {
           mdx = "mdx",
@@ -17,6 +49,9 @@ return {
     end,
   },
   {
-    "stevearc/conform.nvim",
+    "mbbill/undotree",
+    keys = {
+      { "<leader>u", "<cmd>UndotreeToggle<CR>", desc = "Toggle Undotree" },
+    },
   },
 }
