@@ -8,7 +8,14 @@ vim.cmd([[let &t_Ce = "\e[4:0m"]])
 
 -- Disable formatting for C files
 vim.api.nvim_create_autocmd("FileType", {
-  pattern = "c",
+  pattern = { "c", "cpp", "objc", "objcpp" },
+  callback = function()
+    vim.b.autoformat = false
+  end,
+})
+
+vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+  pattern = "*.h",
   callback = function()
     vim.b.autoformat = false
   end,

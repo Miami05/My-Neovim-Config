@@ -3,6 +3,8 @@ return {
   dependencies = {
     "rcarriga/nvim-dap-ui",
     "nvim-neotest/nvim-nio",
+    "williamboman/mason.nvim",
+    "jay-babu/mason-nvim-dap.nvim",
   },
   config = function()
     local dap = require("dap")
@@ -27,7 +29,18 @@ return {
         program = function()
           return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
         end,
-        cwd = vim.fn.getcwd(), -- Fix for workspace folder issue
+        args = function()
+          local args_str = vim.fn.input("Arguments (optional): ")
+          if args_str == "" then
+            return {} -- Return empty table if no arguments provided
+          end
+          local args = {}
+          for arg in string.gmatch(args_str, "%S+") do
+            table.insert(args, arg)
+          end
+          return args
+        end,
+        cwd = vim.fn.getcwd(),
       },
     }
     dap.configurations.c = dap.configurations.cpp
@@ -40,10 +53,10 @@ return {
     vim.keymap.set("n", "<F5>", function()
       dap.continue()
     end, keymap_opts)
-    vim.keymap.set("n", "n", function()
+    vim.keymap.set("n", "<F2>", function()
       dap.step_over()
     end, keymap_opts)
-    vim.keymap.set("n", "s", function()
+    vim.keymap.set("n", "<F3>", function()
       dap.step_into()
     end, keymap_opts)
     vim.keymap.set("n", "<F12>", function()
