@@ -14,7 +14,7 @@ return {
       window = {
         margin = { vertical = 0, horizontal = 1 },
         padding = 1,
-        placement = { horizontal = "right", vertical = "top" },
+        placement = { horizontal = "center", vertical = "top" },
         width = "fit",
         winhighlight = {
           active = { Normal = "InclineNormal", InclineNormal = "InclineNormal" },

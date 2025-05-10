@@ -2,7 +2,6 @@
 -- Place this file in lua/plugins/git-signs.lua
 
 return {
-  -- LazyGit integration
   {
     "kdheepak/lazygit.nvim",
     cmd = { "LazyGit", "LazyGitConfig", "LazyGitCurrentFile", "LazyGitFilter" },
@@ -13,8 +12,6 @@ return {
       "nvim-lua/plenary.nvim",
     },
   },
-
-  -- Git signs in the gutter
   {
     "lewis6991/gitsigns.nvim",
     event = { "BufReadPre", "BufNewFile" },

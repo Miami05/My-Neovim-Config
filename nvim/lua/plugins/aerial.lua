@@ -63,7 +63,7 @@ return {
     vim.keymap.set("n", "<leader>a", "<cmd>AerialToggle!<CR>", { desc = "Toggle aerial" })
   end,
   keys = {
-    { "<leader>a",  "<cmd>AerialToggle!<CR>",    desc = "Toggle Aerial sidebar" },
+    { "<leader>a", "<cmd>AerialToggle!<CR>", desc = "Toggle Aerial sidebar" },
     { "<leader>as", "<cmd>Telescope aerial<CR>", desc = "Search symbols with Telescope" },
   },
 }
