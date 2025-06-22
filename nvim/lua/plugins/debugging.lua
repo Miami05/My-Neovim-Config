@@ -5,6 +5,7 @@ return {
     "nvim-neotest/nvim-nio",
     "williamboman/mason.nvim",
     "jay-babu/mason-nvim-dap.nvim",
+    "mfussenegger/nvim-dap-python",
   },
   config = function()
     local dap = require("dap")
@@ -20,6 +21,13 @@ return {
       },
     }
 
+    -- Configure Python adapter
+    dap.adapters.python = {
+      type = "executable",
+      command = vim.fn.stdpath("data") .. "/mason/packages/debugpy/venv/bin/python",
+      args = { "-m", "debugpy.adapter" },
+    }
+
     -- Configure C++ launch configurations
     dap.configurations.cpp = {
       {
@@ -32,7 +40,38 @@ return {
         args = function()
           local args_str = vim.fn.input("Arguments (optional): ")
           if args_str == "" then
-            return {} -- Return empty table if no arguments provided
+            return {}
+          end
+          local args = {}
+          for arg in string.gmatch(args_str, "%S+") do
+            table.insert(args, arg)
+          end
+          return args
+        end,
+        cwd = "${workspaceFolder}",
+        stopOnEntry = false,
+      },
+    }
+    dap.configurations.c = dap.configurations.cpp
+
+    -- Configure Python launch configurations
+    dap.configurations.python = {
+      {
+        type = "python",
+        request = "launch",
+        name = "Launch file",
+        program = "${file}",
+        pythonPath = function()
+          local venv_python = vim.fn.getcwd() .. "/venv/bin/python"
+          if vim.fn.executable(venv_python) == 1 then
+            return venv_python
+          end
+          return vim.fn.exepath("python3") or vim.fn.exepath("python") or "python"
+        end,
+        args = function()
+          local args_str = vim.fn.input("Arguments (optional): ")
+          if args_str == "" then
+            return {}
           end
           local args = {}
           for arg in string.gmatch(args_str, "%S+") do
@@ -41,35 +80,23 @@ return {
           return args
         end,
         cwd = vim.fn.getcwd(),
+        console = "integratedTerminal",
       },
     }
-    dap.configurations.c = dap.configurations.cpp
 
     -- Setup DAP UI
     dapui.setup()
 
-    -- Key mappings (Fixing undefined `opts`)
-    local keymap_opts = { noremap = true, silent = true }
-    vim.keymap.set("n", "<F5>", function()
-      dap.continue()
-    end, keymap_opts)
-    vim.keymap.set("n", "<F2>", function()
-      dap.step_over()
-    end, keymap_opts)
-    vim.keymap.set("n", "<F3>", function()
-      dap.step_into()
-    end, keymap_opts)
-    vim.keymap.set("n", "<F12>", function()
-      dap.step_out()
-    end, keymap_opts)
-    vim.keymap.set("n", "<leader>b", function()
-      dap.toggle_breakpoint()
-    end, keymap_opts)
-    vim.keymap.set("n", "<leader>B", function()
-      dap.set_breakpoint()
-    end, keymap_opts)
+    -- Key mappings
+    local opts = { noremap = true, silent = true }
+    vim.keymap.set("n", "<F5>", dap.continue, opts)
+    vim.keymap.set("n", "<F2>", dap.step_over, opts)
+    vim.keymap.set("n", "<F3>", dap.step_into, opts)
+    vim.keymap.set("n", "<F12>", dap.step_out, opts)
+    vim.keymap.set("n", "<leader>b", dap.toggle_breakpoint, opts)
+    vim.keymap.set("n", "<leader>B", dap.set_breakpoint, opts)
 
-    -- Ensure DAP UI opens/closes with debugging sessions
+    -- Auto open/close DAP UI
     dap.listeners.before.attach.dapui_config = function()
       dapui.open()
     end

@@ -12,7 +12,15 @@ return {
       -- Snippet engine
       "L3MON4D3/LuaSnip",
       "rafamadriz/friendly-snippets",
+      "kristijanhusak/vim-dadbod-completion",
     },
+    opts = function(_, opts)
+      -- Add SQL completion to existing sources
+      if opts.sources then
+        table.insert(opts.sources, { name = "vim-dadbod-completion" })
+      end
+      return opts
+    end,
     config = function()
       local cmp = require("cmp")
       local luasnip = require("luasnip")

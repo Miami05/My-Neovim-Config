@@ -6,6 +6,17 @@ return {
     },
     opts = {
       ensure_installed = {
+        -- Your stack
+        "html",
+        "css",
+        "scss",
+        "javascript",
+        "typescript",
+        "python",
+        "sql",
+        "json",
+        "yaml",
+        -- C/C++
         "c",
         "cpp",
         "python",
