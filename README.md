@@ -2,8 +2,6 @@
 
 A personalized Neovim setup built on top of LazyVim with custom plugins, keymaps, and settings for efficient coding. This configuration is specifically tailored for C/C++ development with 42 School integration.
 
-![Screenshot of Neovim](./assets/dashboard-preview.png) <!-- Optional: Add your screenshot path here -->
-
 ## Table of Contents
 
 - [Features](#features)
