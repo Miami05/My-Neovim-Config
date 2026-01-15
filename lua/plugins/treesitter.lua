@@ -3,9 +3,9 @@ return {
     "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdate",
     event = { "BufReadPre", "BufNewFile" },
-    main = "nvim-treesitter.configs", -- tells Lazy which module to require
+    main = "nvim-treesitter.configs",
     opts = {
-      ensure_installed = { "lua", "sql", "json", "lack", "quick-lint-js", "sql-formatter" },
+      ensure_installed = { "lua", "sql", "json" },
       highlight = { enable = true },
       indent = { enable = true },
     },

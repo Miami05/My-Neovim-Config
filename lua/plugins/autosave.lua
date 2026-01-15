@@ -8,7 +8,7 @@ return {
           return ""
         end,
       },
-      trigger_events = { "InsertLeave", "TextChanged" }, -- Save on these events
+      trigger_events = { "InsertLeave", "TextChanged" },
       write_all_buffers = true,
     })
   end,

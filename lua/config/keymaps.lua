@@ -8,6 +8,17 @@ local opts = { noremap = true, silent = true }
 keymap.set("n", "+", "<C-a>")
 keymap.set("n", "-", "<C-x>")
 
+-- For Makefiles, always use tabs
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "make",
+  callback = function()
+    vim.bo.expandtab = false
+    vim.bo.tabstop = 4
+    vim.bo.shiftwidth = 4
+    vim.bo.softtabstop = 0
+  end,
+})
+
 -- New tab
 keymap.set("n", "te", ":tabedit")
 keymap.set("n", "<tab>", ":tabnext<Return>", opts)
